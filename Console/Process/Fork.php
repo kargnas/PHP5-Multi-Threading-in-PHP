@@ -69,6 +69,13 @@ class Fork
     private $_callback;
 
     /**
+     * Callback parameter
+     *
+     * @var Array
+     */
+    private $_callbackParam;
+
+    /**
      * Object that handles shared memory.
      *
      * @var PHProcess\Console\Process\Memory
@@ -139,18 +146,32 @@ class Fork
     }
 
     /**
+     * Returns parameters of callback of the process.
+     *
+     * @return Array
+     */
+    public function getCallbackParam()
+    {
+        if (null === $this->_callbackParam) {
+            $this->_callbackParam = array();
+        }
+        return $this->_callbackParam;
+    }
+
+    /**
      * Defines the callback to execute in the forked process.
      *
      * @param   mixed $callback
      * @return  PHProcess\Console\Process\Fork Fluent interface, returns self.
      */
-    public function setCallback($callback)
+    public function setCallback($callback, $param)
     {
         if (!is_callable($callback)) {
             $message = 'Callback given is not callable';
             throw new \InvalidArgumentException($message);
         }
         $this->_callback = $callback;
+        $this->_callbackParam = $param;
         return $this;
     }
 
@@ -215,7 +236,7 @@ class Fork
                     }
                 );
 
-                $result = call_user_func($this->getCallback());
+                $result = call_user_func_array($this->getCallback(), $this->getCallbackParam());
                 $status = self::RESULT_STATUS_SUCESS;
 
             } catch (\ErrorException $exception) {

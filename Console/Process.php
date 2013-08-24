@@ -92,7 +92,7 @@ class Process
      * @param   int[optional] $gid
      * @return  PHProcess\Console\Process\Fork Forked process
      */
-    public function fork($callback, $uid = null, $gid = null)
+    public function fork($callback, $uid = null, $gid = null, Array $param = array())
     {
         $fork = new Process\Fork();
         if (null !== $uid) {
@@ -101,7 +101,7 @@ class Process
         if (null !== $gid) {
             $fork->setGroupId($gid);
         }
-        $fork->setCallback($callback)
+        $fork->setCallback($callback, $param)
              ->start();
 
         $this->_forks[] = $fork;
