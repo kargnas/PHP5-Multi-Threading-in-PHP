@@ -1,0 +1,22 @@
+{
+    "name": "kargnas/php-process",
+    "type": "library",
+    "description": "This is a simple class that helps forking process in PHP. Only works under php-cli on Unix systems.",
+    "authors": [
+        {
+            "name": "Cyril Nicodème"
+        },
+        {
+            "name": "kargnas"
+        }
+    ],
+    "require": {
+        "php": ">=5.4"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": { 
+            "PHProcess": "Console/" 
+        }
+    }
+}
